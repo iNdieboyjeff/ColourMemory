@@ -1,6 +1,7 @@
 package uk.me.jeffsutton.colourmemory;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -196,13 +197,27 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         grid.setOnItemClickListener(ColourMemoryActivity.this);
 
         if (remainingCards == 0) {
+            promptForNewGame();
             promptToSaveScore();
+
         }
 
     }
 
     private void promptForNewGame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.new_game);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                newGame();
+            }
+        });
+        builder.setNegativeButton(R.string.no, null);
 
+        final AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void promptToSaveScore() {
