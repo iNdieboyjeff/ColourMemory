@@ -1,5 +1,6 @@
 package uk.me.jeffsutton.colourmemory;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +22,7 @@ import uk.me.jeffsutton.colourmemory.model.HighScore;
 import uk.me.jeffsutton.colourmemory.model.HighScoreTable;
 
 
-public class ColourMemoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, Animation.AnimationListener {
+public class ColourMemoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private GridView grid;
     private TextView scoreView;
@@ -121,35 +122,6 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         view.startAnimation(animation1);
     }
 
-    private class HideAnimationListener implements Animation.AnimationListener {
-
-        View view;
-        Animation animation;
-
-        public HideAnimationListener(View view, Animation animation) {
-            this.view = view;
-            this.animation = animation;
-        }
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            ImageView iv = (ImageView) view.findViewById(R.id.imageView);
-            iv.setImageResource(R.drawable.card_bg);
-            view.setAnimation(this.animation);
-            view.startAnimation(this.animation);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-
-        }
-    }
-
     private void doFlipHide(final View v1, final View v2) {
         Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
@@ -173,7 +145,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
             @Override
             public void onAnimationEnd(Animation animation) {
-               adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -220,11 +192,8 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
         scoreView.setText(getString(R.string.score_display, score));
 
-
-
         activeCardPosition = -1;
         grid.setOnItemClickListener(ColourMemoryActivity.this);
-
 
         if (remainingCards == 0) {
             promptToSaveScore();
@@ -232,9 +201,13 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
     }
 
+    private void promptForNewGame() {
+
+    }
+
     private void promptToSaveScore() {
         LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.save_score_prompt_dialog, null);
+        @SuppressLint("InflateParams") View promptsView = li.inflate(R.layout.save_score_prompt_dialog, null);
         final EditText nameInput = (EditText) promptsView.findViewById(R.id.editText);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(promptsView);
@@ -269,18 +242,32 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         HighScoreTable.saveHighScores(this, table);
     }
 
-    @Override
-    public void onAnimationStart(Animation animation) {
+    private class HideAnimationListener implements Animation.AnimationListener {
 
-    }
+        final View view;
+        final Animation animation;
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
+        public HideAnimationListener(View view, Animation animation) {
+            this.view = view;
+            this.animation = animation;
+        }
 
-    }
+        @Override
+        public void onAnimationStart(Animation animation) {
 
-    @Override
-    public void onAnimationRepeat(Animation animation) {
+        }
 
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            ImageView iv = (ImageView) view.findViewById(R.id.imageView);
+            iv.setImageResource(R.drawable.card_bg);
+            view.setAnimation(this.animation);
+            view.startAnimation(this.animation);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }

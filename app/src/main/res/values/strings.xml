@@ -8,9 +8,6 @@
     <string name="forgot_name">You forgot to enter your name! Whoops</string>
     <string name="high_scores">High\nScores</string>
     <string name="title_activity_high_scores">HighScoresActivity</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="rank">Rank</string>
     <string name="name">Name</string>
     <string name="score">Score</string>
