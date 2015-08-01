@@ -11,7 +11,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/header_bottom_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_marginTop="@dimen/header_top_margin">
 
         <TextView
@@ -23,13 +22,17 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="16sp"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-light" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView2"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true" />
 
         <Button
             android:layout_width="wrap_content"
@@ -38,7 +41,8 @@
             android:id="@+id/button"
             android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <GridView

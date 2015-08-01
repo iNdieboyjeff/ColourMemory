@@ -14,4 +14,5 @@
     <string name="new_game">Would you like to start a new game?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="done">Done</string>
 </resources>

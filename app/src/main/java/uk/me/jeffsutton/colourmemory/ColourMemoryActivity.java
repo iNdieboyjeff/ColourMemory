@@ -65,6 +65,11 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         adapter = new CardGridAdapter(this, Card.generateCards());
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
+        score = 0;
+        activeCardPosition = -1;
+        activeCardView = null;
+        remainingCards = 16;
+        scoreView.setText(getString(R.string.score_display, score));
     }
 
     private void doFlipShow(final View view, final Card card, final int position) {
