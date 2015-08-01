@@ -1,11 +1,13 @@
 package uk.me.jeffsutton.colourmemory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
     GridView grid;
     TextView scoreView;
+    Button highScoresButton;
 
     CardGridAdapter adapter;
 
@@ -34,8 +37,21 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
         grid = (GridView) findViewById(R.id.gridView);
         scoreView = (TextView) findViewById(R.id.textView);
+        highScoresButton = (Button) findViewById(R.id.button);
+
+        highScoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showHighScores();
+            }
+        });
 
         newGame();
+    }
+
+    private void showHighScores() {
+        Intent intent = new Intent(this, HighScoresActivity.class);
+        startActivity(intent);
     }
 
     private void newGame() {
