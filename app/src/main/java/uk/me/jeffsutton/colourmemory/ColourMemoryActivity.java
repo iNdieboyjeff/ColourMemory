@@ -30,7 +30,10 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
     private int score = 0;
     private int activeCardPosition = -1;
+    private View activeCardView;
     private int remainingCards = 16;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void doFlipShow(final View view, final Card card, final int position) {
+
         Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
         final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
 
@@ -99,7 +103,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
                     grid.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            compareCards(card, (Card) adapter.getItem(activeCardPosition));
+                            compareCards(card, (Card) adapter.getItem(activeCardPosition), view);
                         }
                     }, 1000);
 
@@ -117,6 +121,71 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         view.startAnimation(animation1);
     }
 
+    private class HideAnimationListener implements Animation.AnimationListener {
+
+        View view;
+        Animation animation;
+
+        public HideAnimationListener(View view, Animation animation) {
+            this.view = view;
+            this.animation = animation;
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            ImageView iv = (ImageView) view.findViewById(R.id.imageView);
+            iv.setImageResource(R.drawable.card_bg);
+            view.setAnimation(this.animation);
+            view.startAnimation(this.animation);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    }
+
+    private void doFlipHide(final View v1, final View v2) {
+        Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        final Animation animation3 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
+        final Animation animation4 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
+
+
+        v1.clearAnimation();
+        v1.setAnimation(animation1);
+        v2.clearAnimation();
+        v2.setAnimation(animation2);
+
+        animation1.setAnimationListener(new HideAnimationListener(v1, animation3));
+        animation2.setAnimationListener(new HideAnimationListener(v2, animation4));
+
+        animation3.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+               adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        v1.startAnimation(animation1);
+        v2.startAnimation(animation2);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Card card = (Card) adapter.getItem(position);
@@ -124,6 +193,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         if (activeCardPosition == -1 && !card.shown) {
             card.shown = true;
             activeCardPosition = position;
+            activeCardView = view;
             doFlipShow(view, card, position);
         } else if (!card.shown) {
             card.shown = true;
@@ -132,7 +202,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-    private void compareCards(final Card lhs, final Card rhs) {
+    private void compareCards(final Card lhs, final Card rhs, View position) {
 
         if (lhs.type == rhs.type) {
             lhs.matched = true;
@@ -145,12 +215,16 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
             lhs.shown = false;
             rhs.shown = false;
             score--;
+            doFlipHide(activeCardView, position);
         }
 
         scoreView.setText(getString(R.string.score_display, score));
+
+
+
         activeCardPosition = -1;
         grid.setOnItemClickListener(ColourMemoryActivity.this);
-        adapter.notifyDataSetChanged();
+
 
         if (remainingCards == 0) {
             promptToSaveScore();
