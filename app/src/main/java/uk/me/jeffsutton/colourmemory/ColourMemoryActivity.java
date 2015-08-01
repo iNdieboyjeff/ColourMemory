@@ -6,10 +6,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import uk.me.jeffsutton.colourmemory.adapter.CardGridAdapter;
@@ -18,7 +21,7 @@ import uk.me.jeffsutton.colourmemory.model.HighScore;
 import uk.me.jeffsutton.colourmemory.model.HighScoreTable;
 
 
-public class ColourMemoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ColourMemoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, Animation.AnimationListener {
 
     private GridView grid;
     private TextView scoreView;
@@ -59,6 +62,61 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         grid.setOnItemClickListener(this);
     }
 
+    private void doFlipShow(final View view, final Card card, final int position) {
+        Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.to_middle);
+        final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.from_middle);
+
+        animation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ImageView iv = (ImageView) view.findViewById(R.id.imageView);
+                iv.setImageResource(card.type);
+                view.setAnimation(animation2);
+                view.startAnimation(animation2);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (position != activeCardPosition && activeCardPosition != -1) {
+                    grid.setOnItemClickListener(null);
+                    grid.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            compareCards(card, (Card) adapter.getItem(activeCardPosition));
+                        }
+                    }, 1000);
+
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        view.clearAnimation();
+        view.setAnimation(animation1);
+        view.startAnimation(animation1);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Card card = (Card) adapter.getItem(position);
@@ -66,22 +124,12 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         if (activeCardPosition == -1 && !card.shown) {
             card.shown = true;
             activeCardPosition = position;
+            doFlipShow(view, card, position);
         } else if (!card.shown) {
             card.shown = true;
+            doFlipShow(view, card, position);
         }
 
-        adapter.notifyDataSetChanged();
-
-        if (position != activeCardPosition && activeCardPosition != -1) {
-            grid.setOnItemClickListener(null);
-            grid.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    compareCards(card, (Card) adapter.getItem(activeCardPosition));
-                }
-            }, 1000);
-
-        }
     }
 
     private void compareCards(final Card lhs, final Card rhs) {
@@ -145,5 +193,20 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
         HighScoreTable table = HighScoreTable.loadHighScores(this);
         table.addScore(scores);
         HighScoreTable.saveHighScores(this, table);
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }
