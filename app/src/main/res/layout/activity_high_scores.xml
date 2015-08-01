@@ -28,7 +28,10 @@
             android:layout_height="wrap_content"
             android:text="@string/done"
             android:id="@+id/button2"
+            android:background="@drawable/button"
+            android:textColor="@color/button_text"
             android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light"
             android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
             android:layout_marginRight="8dp" />

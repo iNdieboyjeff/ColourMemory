@@ -11,8 +11,6 @@ import uk.me.jeffsutton.colourmemory.model.HighScoreTable;
 
 public class HighScoresActivity extends AppCompatActivity {
 
-    private Button doneButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +18,12 @@ public class HighScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_scores);
 
         ListView mList = (ListView) findViewById(R.id.listView);
+        Button doneButton = (Button) findViewById(R.id.button2);
 
         HighScoreTable table = HighScoreTable.loadHighScores(this);
 
         mList.setAdapter(new HighScoreAdapter(this, table.list));
 
-        doneButton = (Button)findViewById(R.id.button2);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
