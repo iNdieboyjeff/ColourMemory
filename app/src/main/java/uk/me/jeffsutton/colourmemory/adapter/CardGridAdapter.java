@@ -50,20 +50,29 @@ public class CardGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.card_item, parent, false);
+            holder = new ViewHolder();
+            holder.cardFace = (ImageView) convertView.findViewById(R.id.imageView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-
-        ImageView v = (ImageView) convertView.findViewById(R.id.imageView);
 
         Card card = mItems.get(position);
 
         if (card.matched || card.shown) {
-            v.setImageResource(card.type);
+            holder.cardFace.setImageResource(card.type);
         } else {
-            v.setImageResource(R.drawable.card_bg);
+            holder.cardFace.setImageResource(R.drawable.card_bg);
         }
 
         return convertView;
+    }
+
+    public class ViewHolder {
+        ImageView cardFace;
     }
 }

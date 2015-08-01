@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Colour Memory</string>
-
+    <string name="score_display">Score\n%1$s</string>
+    <string name="enter_name">To save your score, please enter your name:</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_hint">(e.g. John Smith)</string>
+    <string name="forgot_name">You forgot to enter your name! Whoops</string>
 </resources>
