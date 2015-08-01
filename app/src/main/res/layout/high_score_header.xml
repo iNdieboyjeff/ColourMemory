@@ -2,11 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="6dp">
+    android:padding="6dp"
+    android:background="#3f484c"
+    android:elevation="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/rank"
         android:id="@+id/rankView"
         android:textColor="@android:color/white"
         android:minWidth="50dp"
@@ -15,6 +18,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/name"
         android:id="@+id/nameView"
         android:textColor="@android:color/white"
         android:layout_weight="1"
@@ -25,6 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/score"
         android:id="@+id/scoreView"
         android:textColor="@android:color/white"
         android:textSize="16sp" />

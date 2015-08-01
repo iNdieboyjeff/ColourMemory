@@ -20,15 +20,14 @@ import uk.me.jeffsutton.colourmemory.model.HighScoreTable;
 
 public class ColourMemoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    GridView grid;
-    TextView scoreView;
-    Button highScoresButton;
+    private GridView grid;
+    private TextView scoreView;
 
-    CardGridAdapter adapter;
+    private CardGridAdapter adapter;
 
-    int score = 0;
-    int activeCardPosition = -1;
-    int remainingCards = 16;
+    private int score = 0;
+    private int activeCardPosition = -1;
+    private int remainingCards = 16;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
 
         grid = (GridView) findViewById(R.id.gridView);
         scoreView = (TextView) findViewById(R.id.textView);
-        highScoresButton = (Button) findViewById(R.id.button);
+        Button highScoresButton = (Button) findViewById(R.id.button);
 
         highScoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +131,7 @@ public class ColourMemoryActivity extends AppCompatActivity implements AdapterVi
                 } else {
                     saveScore(score, nameInput.getText().toString());
                     dialog.dismiss();
+                    showHighScores();
                 }
             }
         });

@@ -17,13 +17,11 @@ import uk.me.jeffsutton.colourmemory.model.HighScore;
  */
 public class HighScoreAdapter extends BaseAdapter {
 
-    private ArrayList<HighScore> mItems;
-    private Context mContext;
-    private LayoutInflater mInflater;
+    private final ArrayList<HighScore> mItems;
+    private final LayoutInflater mInflater;
 
     public HighScoreAdapter(Context context, ArrayList<HighScore> data) {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(this.mContext);
+        this.mInflater = LayoutInflater.from(context);
         this.mItems = data;
     }
 

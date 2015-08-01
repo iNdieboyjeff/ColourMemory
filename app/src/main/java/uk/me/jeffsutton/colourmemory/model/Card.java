@@ -10,20 +10,20 @@ import uk.me.jeffsutton.colourmemory.R;
  */
 public class Card {
 
-    public static final int CARD_TYPE_1 = R.drawable.colour1;
-    public static final int CARD_TYPE_2 = R.drawable.colour2;
-    public static final int CARD_TYPE_3 = R.drawable.colour3;
-    public static final int CARD_TYPE_4 = R.drawable.colour4;
-    public static final int CARD_TYPE_5 = R.drawable.colour5;
-    public static final int CARD_TYPE_6 = R.drawable.colour6;
-    public static final int CARD_TYPE_7 = R.drawable.colour7;
-    public static final int CARD_TYPE_8 = R.drawable.colour8;
+    private static final int CARD_TYPE_1 = R.drawable.colour1;
+    private static final int CARD_TYPE_2 = R.drawable.colour2;
+    private static final int CARD_TYPE_3 = R.drawable.colour3;
+    private static final int CARD_TYPE_4 = R.drawable.colour4;
+    private static final int CARD_TYPE_5 = R.drawable.colour5;
+    private static final int CARD_TYPE_6 = R.drawable.colour6;
+    private static final int CARD_TYPE_7 = R.drawable.colour7;
+    private static final int CARD_TYPE_8 = R.drawable.colour8;
 
-    public int type;
+    public final int type;
     public boolean shown = false;
     public boolean matched = false;
 
-    public Card(int type) {
+    private Card(int type) {
         this.type = type;
     }
 

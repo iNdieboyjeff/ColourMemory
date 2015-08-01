@@ -17,13 +17,11 @@ import uk.me.jeffsutton.colourmemory.model.Card;
  */
 public class CardGridAdapter extends BaseAdapter {
 
-    private ArrayList<Card> mItems;
-    private Context mContext;
-    private LayoutInflater mInflater;
+    private final ArrayList<Card> mItems;
+    private final LayoutInflater mInflater;
 
     public CardGridAdapter(Context context, ArrayList<Card> data) {
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(this.mContext);
+        this.mInflater = LayoutInflater.from(context);
         this.mItems = data;
     }
 

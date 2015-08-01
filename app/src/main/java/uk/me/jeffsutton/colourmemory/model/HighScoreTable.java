@@ -25,11 +25,11 @@ public class HighScoreTable {
             }
             Gson gson = new Gson();
             HighScoreTable table = gson.fromJson(builder.toString(), HighScoreTable.class);
+            Collections.sort(table.list);
             return table;
         } catch (Exception err) {
             err.printStackTrace();
-            HighScoreTable table = new HighScoreTable();
-            return table;
+            return new HighScoreTable();
         }
     }
 

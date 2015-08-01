@@ -9,14 +9,12 @@ import uk.me.jeffsutton.colourmemory.model.HighScoreTable;
 
 public class HighScoresActivity extends AppCompatActivity {
 
-    ListView mList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_scores);
 
-        mList = (ListView) findViewById(R.id.listView);
+        ListView mList = (ListView) findViewById(R.id.listView);
 
         HighScoreTable table = HighScoreTable.loadHighScores(this);
 
